@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Input App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        #display {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Input App</h1>
+    <input type="text" id="inputField" placeholder="Type something...">
+    <button onclick="storeInput()">Submit</button>
+    <div id="display"></div>
+
+    <script>
+        function storeInput() {
+            const inputField = document.getElementById('inputField');
+            const display = document.getElementById('display');
+            const inputValue = inputField.value;
+
+            if (inputValue) {
+                display.textContent = `You entered: ${inputValue}`;
+                localStorage.setItem('storedInput', inputValue);
+            } else {
+                display.textContent = 'Please enter something.';
+            }
+        }
+
+        window.onload = function() {
+            const storedInput = localStorage.getItem('storedInput');
+            if (storedInput) {
+                document.getElementById('display').textContent = `You previously entered: ${storedInput}`;
+            }
+        }
+    </script>
+</body>
+</html>
