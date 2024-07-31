@@ -15,6 +15,13 @@
         #display {
             margin-top: 20px;
         }
+        #tally {
+            margin-top: 20px;
+            max-width: 300px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
@@ -22,26 +29,50 @@
     <input type="text" id="inputField" placeholder="Type something...">
     <button onclick="storeInput()">Submit</button>
     <div id="display"></div>
+    <div id="tally"></div>
 
     <script>
         function storeInput() {
             const inputField = document.getElementById('inputField');
             const display = document.getElementById('display');
+            const tally = document.getElementById('tally');
             const inputValue = inputField.value;
 
             if (inputValue) {
+                // Display the current input
                 display.textContent = `You entered: ${inputValue}`;
-                localStorage.setItem('storedInput', inputValue);
+
+                // Save input to local storage
+                let inputs = JSON.parse(localStorage.getItem('inputs')) || [];
+                inputs.push(inputValue);
+                localStorage.setItem('inputs', JSON.stringify(inputs));
+
+                // Update the tally display
+                updateTally();
             } else {
                 display.textContent = 'Please enter something.';
             }
         }
 
+        function updateTally() {
+            const tally = document.getElementById('tally');
+            let inputs = JSON.parse(localStorage.getItem('inputs')) || [];
+            tally.innerHTML = '<h3>Input Tally:</h3>';
+            inputs.forEach((input, index) => {
+                tally.innerHTML += `<p>${index + 1}: ${input}</p>`;
+            });
+        }
+
+        // Load previous inputs on page load
         window.onload = function() {
+            const display = document.getElementById('display');
             const storedInput = localStorage.getItem('storedInput');
             if (storedInput) {
-                document.getElementById('display').textContent = `You previously entered: ${storedInput}`;
+                display.textContent = `You previously entered: ${storedInput}`;
             }
+
+            // Update the tally display
+            updateTally();
         }
     </script>
 </body>
