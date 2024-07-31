@@ -57,7 +57,7 @@
         function updateTally() {
             const tally = document.getElementById('tally');
             let inputs = JSON.parse(localStorage.getItem('inputs')) || [];
-            tally.innerHTML = '<h3>Input Tally:</h3>';
+            tally.innerHTML = '<h3>Input History:</h3>';
             inputs.forEach((input, index) => {
                 tally.innerHTML += `<p>${index + 1}: ${input}</p>`;
             });
@@ -77,3 +77,4 @@
     </script>
 </body>
 </html>
+
